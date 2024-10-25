@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram ❤️ Twitter (X) Downloader</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(20, 20, 20, 0.8);
+            border: 2px solid #ff0062;
+            border-radius: 15px;
+            padding: 40px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg 340deg,
+                #ff0062 340deg 360deg
+            );
+            animation: rotate 4s linear infinite;
+        }
+        .container::after {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            background: #0a0a0a;
+            border-radius: 12px;
+        }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+        h1 {
+            color: #ff0062;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px #ff0062;
+        }
+        #downloadForm {
+            display: flex;
+            flex-direction: column;
+        }
+        #videoUrl {
+            padding: 15px;
+            background-color: rgba(255, 0, 98, 0.1);
+            border: 2px solid #ff0062;
+            border-radius: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+        }
+        #videoUrl:focus {
+            outline: none;
+            box-shadow: 0 0 10px #ff0062;
+        }
+        button {
+            padding: 15px;
+            background: #ff0062;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 0, 98, 0.4);
+        }
+        #result {
+            margin-top: 30px;
+        }
+        #videoPlayer {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px #ff0062;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+        }
+        .hidden {
+            display: none;
+        }
+        #loader {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #error {
+            color: #ff0000;
+            text-align: center;
+            margin-top: 20px;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                width: 100%;
+                max-width: none ;
+            }
+            #videoUrl {
+                font-size: 14px;
+            }
+            button {
+                font-size: 14px;
+ }
+        }
+        .social-boxes {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        .social-box {
+            background: linear-gradient(45deg, #ff0062, #00a2ff);
+            border-radius: 15px;
+            padding: 20px;
+            width: 48%;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        .social-icon {
+            font-size: 24px;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .social-text {
+            color: #fff;
+            font-size: 14px;
+            margin: 0;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #fff;
+        }
+        footer a {
+            color: #FF0062;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h1>Instagram ❤️ youtube ❤️soundcloud ❤️ tiktok ❤️ Twitter(X) Downloader</h1>
+            <form id="downloadForm">
+                <input type="text" id="videoUrl" placeholder="Enter Instagram video URL" required>
+                <button type="submit" style="color: #fff;">Download Video</button>
+            </form>
+            <div id="loader" class="hidden">
+                <img src="https://i.gifer.com/ZKZg.gif" alt="Loading..." style="width: 50px; height: 50px;">
+            </div>
+            <div id="result" class="hidden">
+                <video id="videoPlayer" controls></video>
+                <div class="button-group">
+                    <button id="downloadBtn" style="color: #fff;">Download</button>
+                    <button id="copyLinkBtn" style="color: #fff;">Copy Link</button>
+                </div>
+                </div>
+            </div>
+            <div id="error" class="hidden"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>طراحی شده توسط <a href="https://tarahno.com//" target="_blank"> طراح نو </a></p>
+    </footer>
+
+    <script>
+        const API_URL = 'https://freeuseapis.vercel.app/api/ig';
+        const MAX_RETRIES = 5;
+        const RETRY_DELAY = 1000; // 1 second
+
+        document
+            .getElementById("downloadForm")
+            .addEventListener("submit", async function (event) {
+                event.preventDefault();
+                const videoUrl = document.getElementById("videoUrl").value;
+                const loader = document.getElementById("loader");
+                const result = document.getElementById("result");
+                const errorDiv = document.getElementById("error");
+                const videoPlayer = document.getElementById("videoPlayer");
+                
+                let attempts = 0;
+                let success = false;
+
+                result.classList.add("hidden");
+                errorDiv.classList.add("hidden");
+                loader.classList.remove("hidden");
+
+                while (attempts < MAX_RETRIES && !success) {
+                    try {
+                        const response = await fetch(`${API_URL}?url=${encodeURIComponent(videoUrl)}`);
+                        const data = await response.json();
+
+                        if (response.ok && data.body?.url && data.statusCode === 200) {
+                            loader.classList.add("hidden");
+                            result.classList.remove("hidden");
+                            videoPlayer.src = data.body.url;
+                            videoPlayer.load();
+                            document.getElementById("downloadBtn").onclick = () =>
+                                window.open(data.body.url, "_blank");
+                            document.getElementById("copyLinkBtn").onclick = async () => {
+                                try {
+                                    await navigator.clipboard.writeText(data.body.url);
+                                    alert("Link copied to clipboard");
+                                } catch (error) {
+                                    console.error("Failed to copy link:", error);
+                                    alert("Failed to copy link. Please try manually.");
+                                }
+                            };
+                            success = true;
+                        } else {
+                            throw new Error("Failed to fetch data");
+                        }
+                    } catch (error) {
+                        attempts++;
+                        if (attempts >= MAX_RETRIES) {
+                            loader.classList.add("hidden");
+                            errorDiv.textContent =
+                                "Failed to fetch data after multiple attempts . Please try again later.";
+                            errorDiv.classList.remove("hidden");
+                        } else {
+                            await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
+                        }
+                    }
+                }
+            });
+    </script>
+</body>
+</html>
